@@ -14,6 +14,18 @@ class Cell {
 };
 
 
+class Field {
+	public:
+		int lines;
+		int columns;
+		Field(int c, int l){
+			lines = l;
+			columns = c;
+		}
+
+}
+
+
 int main() 
 {
 	return 0;
