@@ -29,23 +29,24 @@ class FieldManager {
 
 		void initializeField(){
 			string key;
-			for (int i = 1; l < i; i++){
-				for (int j = 1; j < i; j++){
+			for (int i = 1; i <= l; i++){
+				for (int j = 1; j <= c; j++){
 					key = to_string(l) + "-" + to_string(c)
 					field.insert(pair<key, Cell>(1, Cell(false))); 
 				}
 			}
 		}
-		
+
 		void printField(){
 			Cell auxiliaryCell;
-			for (int i = 0; i < lines; i++){
-                              for (int j = 0; j < columns; j++){
-                                        auxiliaryCell = field[i][j];
+
+			for (int i = 1; i <= lines; i++){
+				for (int j = 1; j <= columns; j++){
+					auxiliaryCell = getCellByCoordinates(i, j);
 					cout << auxiliaryCell.revealed;
-                                }
+				}
 				cout << endl;
-                        }
+            }
 			
 		}
 
