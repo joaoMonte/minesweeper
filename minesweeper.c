@@ -18,10 +18,10 @@ class Cell {
 
 class FieldCreator {
 	public:
-		Field(int c, int l){
+		FieldCreator(int c, int l){
 			lines = l;
 			columns = c;
-			field = new Cell[l][c]
+			field = new Cell[l][c];
 			
 			for (int i = 0; i < l; i++){
 				for (int j = 0; j < c; j++){
@@ -29,14 +29,25 @@ class FieldCreator {
 				}
 			}
 		}
+		void printField(){
+			Cell auxiliaryCell;
+			 for (int i = 0; i < lines; i++){
+                                for (int j = 0; j < columns; j++){
+                                        auxiliaryCell = field[i][j];
+					cout << auxiliaryCell.revealed;
+                                }
+				cout << endl;
+                        }
+			
+		}
 
 
 	private:
 		int lines;
 		int columns;
-		Cell* field;
+		Cell** field;
 
-}
+};
 
 
 int main() 
