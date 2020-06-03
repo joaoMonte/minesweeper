@@ -45,7 +45,7 @@ class Cell {
 class FieldManager {
 	public:
 
-		FieldManager(int c, int l){
+		FieldManager(int l, int c){
 			lines = l;
 			columns = c;
 		}
@@ -96,7 +96,7 @@ class FieldManager {
 
 int main() 
 {
-	FieldManager teste = FieldManager(5, 5);
+	FieldManager teste = FieldManager(9, 5);
 	teste.initializeField();
 	teste.printField();
 	//Cell t1 = Cell(false);
