@@ -25,17 +25,21 @@ class FieldManager {
 		FieldManager(int c, int l){
 			lines = l;
 			columns = c;
-			field = new Cell[l][c];
-			
+		}
+
+		void initializeField(){
+			string key;
 			for (int i = 1; l < i; i++){
 				for (int j = 1; j < i; j++){
-					teste.insert(pair<int, Cell>(1, Cell(false))); 
+					key = to_string(l) + "-" + to_string(c)
+					field.insert(pair<key, Cell>(1, Cell(false))); 
 				}
 			}
 		}
+		
 		void printField(){
 			Cell auxiliaryCell;
-			 for (int i = 0; i < lines; i++){
+			for (int i = 0; i < lines; i++){
                               for (int j = 0; j < columns; j++){
                                         auxiliaryCell = field[i][j];
 					cout << auxiliaryCell.revealed;
@@ -43,6 +47,13 @@ class FieldManager {
 				cout << endl;
                         }
 			
+		}
+
+		Cell getCellByCoordinates(int line, int column){
+				string key = to_string(line) + "-" + to_string(column)
+				map<string, Cell>::iterator itr;
+				itr = field.find(key);
+				return itr->second;
 		}
 
 
