@@ -34,7 +34,7 @@ class Cell {
 			isBomb = isbomb;
 			revealed = false;
 			isFlag = false;
-			nextBombsCounter = 0
+			bombsInNeighborhood = 0
 		}
 
 		void reveal(){
@@ -49,14 +49,16 @@ class Cell {
 			isFlag = true
 		}
 
-		void incrementNextBombsCounter(){
-			nextBombsCounter++;
+		void incrementBombsInNeighborhood(){
+			if !isBomb {
+				bombsInNeighborhood++;
+			}
 		}
 
-		int getNextBombsCounter(){
-			return nextBombsCounter;
+		int getBombsInNeighborhood(){
+			return bombsInNeighborhood;
 		}
-		
+
 	private:
 		bool revealed;
 		bool isFlag;
@@ -88,6 +90,57 @@ class FieldManager {
 					key = toStr(lines) + "-" + toStr(columns);
 					field.insert(pair<string, Cell>(key, Cell(false))); 
 				}
+			}
+			// update the nextBombCounter
+			for (int i = 1; i <= lines; i++){
+				for (int j = 1; j <= columns; j++){
+					key = toStr(lines) + "-" + toStr(columns);
+					field.insert(pair<string, Cell>(key, Cell(false))); 
+				}
+			}
+
+
+		}
+
+		void incrementNeighborCells(l, c){
+			//Check l-1 / c-1
+			if l-1 >= 1 && c-1 >= 1 {
+				getCellByCoordinates(l-1, c-1).incrementBombsInNeighborhood();
+			}
+
+			//Check l-1 / c
+			if l-1 >= 1 {
+				getCellByCoordinates(l-1, c).incrementBombsInNeighborhood();
+			}
+
+			//Check l-1 / c + 1
+			if l-1 >= 1 && c+1 <= columns {
+				getCellByCoordinates(l-1, c+1).incrementBombsInNeighborhood();
+			}
+
+			//Check l / c - 1
+			if c-1 >= 1 {
+				getCellByCoordinates(l, c-1).incrementBombsInNeighborhood();
+			}
+
+			//Check l / c + 1
+			if c+1 <= columns {
+				getCellByCoordinates(l, c+1).incrementBombsInNeighborhood();
+			}
+
+			//Check l+1 / c - 1
+			if l+1 <= lines && c-1 >= 1 {
+				getCellByCoordinates(l+1, c-1).incrementBombsInNeighborhood();
+			}
+
+			//Check l+1 / c
+			if l+1 <= lines {
+				getCellByCoordinates(l+1, c).incrementBombsInNeighborhood();
+			}
+
+			//Check l+1 / c+1
+			if l+1 <= lines && c+1 <= columns {
+				getCellByCoordinates(l+1, c+1).incrementBombsInNeighborhood();
 			}
 		}
 
