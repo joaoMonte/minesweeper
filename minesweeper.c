@@ -30,14 +30,38 @@ class Queue {
 
 class Cell {
 	public:
-		bool revealed;
-		bool isFlag;
-		bool isBomb;
 		Cell(bool isbomb){
 			isBomb = isbomb;
 			revealed = false;
 			isFlag = false;
+			nextBombsCounter = 0
 		}
+
+		void reveal(){
+			revealed = true;
+		}
+
+		bool alreadyRevealed(){
+			return revealed;
+		}
+
+		void setFlag(){
+			isFlag = true
+		}
+
+		void incrementNextBombsCounter(){
+			nextBombsCounter++;
+		}
+
+		int getNextBombsCounter(){
+			return nextBombsCounter;
+		}
+		
+	private:
+		bool revealed;
+		bool isFlag;
+		bool isBomb;
+		int nextBombsCounter;
 
 };
 
