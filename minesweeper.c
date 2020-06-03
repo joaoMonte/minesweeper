@@ -14,19 +14,19 @@ class Queue {
 			buffer.push_back(cellCoordinates);
 		}
 
-		void dequeue(){
+		string dequeue(){
 			string auxiliaryString = buffer[0];
 			buffer.erase(buffer.begin());
 			return auxiliaryString;
 		}
 
 		bool isEmpty(){
-			return buffer.size() == 0
+			return buffer.size() == 0;
 		}
 
 	private:
 		vector<string> buffer;
-}
+};
 
 class Cell {
 	public:
@@ -61,19 +61,17 @@ class FieldManager {
 			string key;
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					key = toStr(lines) + "-" + toStr(columns)
+					key = toStr(lines) + "-" + toStr(columns);
 					field.insert(pair<string, Cell>(key, Cell(false))); 
 				}
 			}
 		}
 
 		void printField(){
-			Cell auxiliaryCell;
 
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					auxiliaryCell = getCellByCoordinates(i, j);
-					cout << auxiliaryCell.revealed;
+					cout << getCellByCoordinates(i, j).revealed;
 				}
 				cout << endl;
             }
@@ -81,7 +79,7 @@ class FieldManager {
 		}
 
 		Cell getCellByCoordinates(int line, int column){
-				string key = toStr(line) + "-" + toStr(column)
+				string key = toStr(line) + "-" + toStr(column);
 				map<string, Cell>::iterator itr;
 				itr = field.find(key);
 				return itr->second;
