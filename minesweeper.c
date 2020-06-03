@@ -22,7 +22,14 @@ class FieldCreator {
 			lines = l;
 			columns = c;
 			field = new Cell[l][c]
+			
+			for (int i = 0; i < l; i++){
+				for (int j = 0; j < c; j++){
+					field[i][j] = Cell(false);
+				}
+			}
 		}
+
 
 	private:
 		int lines;
