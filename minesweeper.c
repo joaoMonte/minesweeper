@@ -80,6 +80,8 @@ class FieldManager {
 			lines = l;
 			columns = c;
 			numberOfBombs = n;
+			generateBombPositions();
+
 		}
 
 		string toStr(int number){
@@ -93,7 +95,6 @@ class FieldManager {
 			//Fill the field with cell instances
 			string key;
 			map<int, bool>::iterator iter;
-
 			//The position counter will know when the specified position is a bomb position.
 			//It reach this objective checking on the bombPositions map.
 			int positionCounter = 1;
@@ -127,12 +128,12 @@ class FieldManager {
 			map<int, bool>::iterator iter;
 			int i = 1;
 			while(i <= numberOfBombs){
-				randomNumber = rand() % numberOfBombs + 1;
+				randomNumber = rand() % (lines*columns) + 1;
 				iter = bombsPositions.find(randomNumber);
 				//If the number isnt a bomb position, add it to the map.
 				//If these number already exists on the map, we need to generate
 				// other random number for a bomb position
-				if (iter != bombsPositions.end()){
+				if (iter == bombsPositions.end()){
 					bombsPositions.insert(pair<int, bool>(randomNumber, true)); 
 					i++;
 				}
@@ -187,7 +188,7 @@ class FieldManager {
 
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					cout << getCellByCoordinates(i, j).getBombsInNeighborhood();
+					cout << getCellByCoordinates(i, j).getBombsInNeighborhood() << " ";
 				}
 				cout << endl;
             }
