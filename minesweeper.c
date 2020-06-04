@@ -100,7 +100,7 @@ class FieldManager {
 			int positionCounter = 1;
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					key = toStr(lines) + "-" + toStr(columns);
+					key = toStr(i) + "-" + toStr(j);
 					iter = bombsPositions.find(positionCounter);
 					//If the current position is a bomb position, we will create the cell as bomb
 					if (iter != bombsPositions.end()){
@@ -112,15 +112,16 @@ class FieldManager {
 					positionCounter++;
 
 				}
+
 			}
 			// update bombsInTheNeighborHood
-			for (int i = 1; i <= lines; i++){
-				for (int j = 1; j <= columns; j++){
-					if (getCellByCoordinates(i,j).getIsBomb()){
-						incrementNeighborCells(i,j); 
-					}
-				}
-			}
+			//for (int i = 1; i <= lines; i++){
+			//	for (int j = 1; j <= columns; j++){
+			//		if (getCellByCoordinates(i,j).getIsBomb()){
+			//			incrementNeighborCells(i,j); 
+			//		}
+			//	}
+			//}
 		}
 
 		void generateBombPositions(){
@@ -188,7 +189,7 @@ class FieldManager {
 
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					cout << getCellByCoordinates(i, j).getBombsInNeighborhood() << " ";
+					cout << getCellByCoordinates(i,j).getIsBomb() << " ";
 				}
 				cout << endl;
             }
@@ -215,7 +216,7 @@ class FieldManager {
 
 int main() 
 {
-	FieldManager teste = FieldManager(9, 5, 10);
+	FieldManager teste = FieldManager(9, 9, 7);
 	teste.initializeField();
 	teste.printField();
 	//Cell t1 = Cell(false);
