@@ -45,6 +45,10 @@ class Cell {
 			return revealed;
 		}
 
+		bool getIsBomb(){
+			return isBomb;
+		}
+
 		void setFlag(){
 			isFlag = true
 		}
@@ -95,8 +99,9 @@ class FieldManager {
 			// update bombsInTheNeighborHood
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					key = toStr(lines) + "-" + toStr(columns);
-					field.insert(pair<string, Cell>(key, Cell(false))); 
+					if getCellByCoordinates(l,c).getIsBomb(){
+						incrementNeighborCells(l, c); 
+					}
 				}
 			}
 
