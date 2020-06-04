@@ -4,7 +4,7 @@
 #include <string> 
 #include <vector> 
 #include <sstream>
-#include <stdlib>
+#include "stdlib.h"
 
 
 using namespace std; 
@@ -35,7 +35,7 @@ class Cell {
 			isBomb = isbomb;
 			revealed = false;
 			isFlag = false;
-			bombsInNeighborhood = 0
+			bombsInNeighborhood = 0;
 		}
 
 		void reveal(){
@@ -51,11 +51,11 @@ class Cell {
 		}
 
 		void setFlag(){
-			isFlag = true
+			isFlag = true;
 		}
 
 		void incrementBombsInNeighborhood(){
-			if !isBomb {
+			if (!isBomb) {
 				bombsInNeighborhood++;
 			}
 		}
@@ -92,7 +92,7 @@ class FieldManager {
 		void initializeField(){
 			//Fill the field with cell instances
 			string key;
-			map<int, bool>::iterator itr;
+			map<int, bool>::iterator iter;
 
 			//The position counter will know when the specified position is a bomb position.
 			//It reach this objective checking on the bombPositions map.
@@ -100,9 +100,9 @@ class FieldManager {
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
 					key = toStr(lines) + "-" + toStr(columns);
-					iter = bombPositions.find(positionCounter);
+					iter = bombsPositions.find(positionCounter);
 					//If the current position is a bomb position, we will create the cell as bomb
-					if iter != bombPositions.end(){
+					if (iter != bombsPositions.end()){
 						field.insert(pair<string, Cell>(key, Cell(true)));
 					}
 					else {
@@ -115,8 +115,8 @@ class FieldManager {
 			// update bombsInTheNeighborHood
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					if getCellByCoordinates(l,c).getIsBomb(){
-						incrementNeighborCells(l, c); 
+					if (getCellByCoordinates(i,j).getIsBomb()){
+						incrementNeighborCells(i,j); 
 					}
 				}
 			}
@@ -124,61 +124,61 @@ class FieldManager {
 
 		void generateBombPositions(){
 			int randomNumber;
-			map<int, bool>::iterator itr;
-			int i = 1
+			map<int, bool>::iterator iter;
+			int i = 1;
 			while(i <= numberOfBombs){
 				randomNumber = rand() % numberOfBombs + 1;
-				iter = bombPositions.find(randomNumber);
+				iter = bombsPositions.find(randomNumber);
 				//If the number isnt a bomb position, add it to the map.
 				//If these number already exists on the map, we need to generate
 				// other random number for a bomb position
-				if iter != bombPositions.end(){
+				if (iter != bombsPositions.end()){
 					bombsPositions.insert(pair<int, bool>(randomNumber, true)); 
-					i++
+					i++;
 				}
 			}
 
 
 		}
 
-		void incrementNeighborCells(l, c){
+		void incrementNeighborCells(int l, int c){
 			//Check l-1 / c-1
-			if l-1 >= 1 && c-1 >= 1 {
+			if (l-1 >= 1 && c-1 >= 1) {
 				getCellByCoordinates(l-1, c-1).incrementBombsInNeighborhood();
 			}
 
 			//Check l-1 / c
-			if l-1 >= 1 {
+			if (l-1 >= 1) {
 				getCellByCoordinates(l-1, c).incrementBombsInNeighborhood();
 			}
 
 			//Check l-1 / c + 1
-			if l-1 >= 1 && c+1 <= columns {
+			if (l-1 >= 1 && c+1 <= columns) {
 				getCellByCoordinates(l-1, c+1).incrementBombsInNeighborhood();
 			}
 
 			//Check l / c - 1
-			if c-1 >= 1 {
+			if (c-1 >= 1) {
 				getCellByCoordinates(l, c-1).incrementBombsInNeighborhood();
 			}
 
 			//Check l / c + 1
-			if c+1 <= columns {
+			if (c+1 <= columns) {
 				getCellByCoordinates(l, c+1).incrementBombsInNeighborhood();
 			}
 
 			//Check l+1 / c - 1
-			if l+1 <= lines && c-1 >= 1 {
+			if (l+1 <= lines && c-1 >= 1) {
 				getCellByCoordinates(l+1, c-1).incrementBombsInNeighborhood();
 			}
 
 			//Check l+1 / c
-			if l+1 <= lines {
+			if (l+1 <= lines) {
 				getCellByCoordinates(l+1, c).incrementBombsInNeighborhood();
 			}
 
 			//Check l+1 / c+1
-			if l+1 <= lines && c+1 <= columns {
+			if (l+1 <= lines && c+1 <= columns) {
 				getCellByCoordinates(l+1, c+1).incrementBombsInNeighborhood();
 			}
 		}
@@ -187,7 +187,7 @@ class FieldManager {
 
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					cout << getCellByCoordinates(i, j).revealed;
+					cout << getCellByCoordinates(i, j).getBombsInNeighborhood();
 				}
 				cout << endl;
             }
@@ -214,7 +214,7 @@ class FieldManager {
 
 int main() 
 {
-	FieldManager teste = FieldManager(9, 5);
+	FieldManager teste = FieldManager(9, 5, 10);
 	teste.initializeField();
 	teste.printField();
 	//Cell t1 = Cell(false);
