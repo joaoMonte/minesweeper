@@ -92,14 +92,24 @@ class FieldManager {
 		void initializeField(){
 			//Fill the field with cell instances
 			string key;
+			map<int, bool>::iterator itr;
 
 			//The position counter will know when the specified position is a bomb position.
 			//It reach this objective checking on the bombPositions map.
-			int positionCounter;
+			int positionCounter = 1;
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
 					key = toStr(lines) + "-" + toStr(columns);
-					field.insert(pair<string, Cell>(key, Cell(false))); 
+					iter = bombPositions.find(positionCounter);
+					//If the current position is a bomb position, we will create the cell as bomb
+					if iter != bombPositions.end(){
+						field.insert(pair<string, Cell>(key, Cell(true)));
+					}
+					else {
+						field.insert(pair<string, Cell>(key, Cell(false)));
+					}
+					positionCounter++;
+
 				}
 			}
 			// update bombsInTheNeighborHood
@@ -110,8 +120,6 @@ class FieldManager {
 					}
 				}
 			}
-
-
 		}
 
 		void generateBombPositions(){
