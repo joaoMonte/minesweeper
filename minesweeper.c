@@ -63,7 +63,7 @@ class Cell {
 		bool revealed;
 		bool isFlag;
 		bool isBomb;
-		int nextBombsCounter;
+		int bombsInNeighborhood;
 
 };
 
@@ -84,6 +84,7 @@ class FieldManager {
 		}
 
 		void initializeField(){
+			//Fill the field with cell instances
 			string key;
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
@@ -91,7 +92,7 @@ class FieldManager {
 					field.insert(pair<string, Cell>(key, Cell(false))); 
 				}
 			}
-			// update the nextBombCounter
+			// update bombsInTheNeighborHood
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
 					key = toStr(lines) + "-" + toStr(columns);
