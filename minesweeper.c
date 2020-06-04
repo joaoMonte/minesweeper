@@ -4,6 +4,7 @@
 #include <string> 
 #include <vector> 
 #include <sstream>
+#include <stdlib>
 
 
 using namespace std; 
@@ -75,9 +76,10 @@ class Cell {
 class FieldManager {
 	public:
 
-		FieldManager(int l, int c){
+		FieldManager(int l, int c, int n){
 			lines = l;
 			columns = c;
+			numberOfBombs = n;
 		}
 
 		string toStr(int number){
@@ -90,6 +92,10 @@ class FieldManager {
 		void initializeField(){
 			//Fill the field with cell instances
 			string key;
+
+			//The position counter will know when the specified position is a bomb position.
+			//It reach this objective checking on the bombPositions map.
+			int positionCounter;
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
 					key = toStr(lines) + "-" + toStr(columns);
@@ -102,6 +108,25 @@ class FieldManager {
 					if getCellByCoordinates(l,c).getIsBomb(){
 						incrementNeighborCells(l, c); 
 					}
+				}
+			}
+
+
+		}
+
+		void generateBombPositions(){
+			int randomNumber;
+			map<int, bool>::iterator itr;
+			int i = 1
+			while(i <= numberOfBombs){
+				randomNumber = rand() % numberOfBombs + 1;
+				iter = bombPositions.find(randomNumber);
+				//If the number isnt a bomb position, add it to the map.
+				//If these number already exists on the map, we need to generate
+				// other random number for a bomb position
+				if iter != bombPositions.end(){
+					bombsPositions.insert(pair<int, bool>(randomNumber, true)); 
+					i++
 				}
 			}
 
@@ -172,7 +197,9 @@ class FieldManager {
 	private:
 		int lines;
 		int columns;
+		int numberOfBombs;
 		map<string, Cell> field;
+		map<int, bool> bombsPositions;
 
 };
 
