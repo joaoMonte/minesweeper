@@ -115,13 +115,13 @@ class FieldManager {
 
 			}
 			// update bombsInTheNeighborHood
-			//for (int i = 1; i <= lines; i++){
-			//	for (int j = 1; j <= columns; j++){
-			//		if (getCellByCoordinates(i,j).getIsBomb()){
-			//			incrementNeighborCells(i,j); 
-			//		}
-			//	}
-			//}
+			for (int i = 1; i <= lines; i++){
+				for (int j = 1; j <= columns; j++){
+					if (getCellByCoordinates(i,j).getIsBomb()){
+						incrementNeighborCells(i,j); 
+					}
+				}
+			}
 		}
 
 		void generateBombPositions(){
@@ -143,45 +143,51 @@ class FieldManager {
 
 		}
 
+		void incrementSingleNeighborCell(int l, int c){
+			Cell cell = getCellByCoordinates(l, c);
+			cell.incrementBombsInNeighborhood();
+			updateCell(cell, l, c);
+		}
+
 		void incrementNeighborCells(int l, int c){
 			//Check l-1 / c-1
 			if (l-1 >= 1 && c-1 >= 1) {
-				getCellByCoordinates(l-1, c-1).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l-1, c-1);
 			}
 
 			//Check l-1 / c
 			if (l-1 >= 1) {
-				getCellByCoordinates(l-1, c).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l-1, c);
 			}
 
 			//Check l-1 / c + 1
 			if (l-1 >= 1 && c+1 <= columns) {
-				getCellByCoordinates(l-1, c+1).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l-1, c+1);
 			}
 
 			//Check l / c - 1
 			if (c-1 >= 1) {
-				getCellByCoordinates(l, c-1).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l, c-1);
 			}
 
 			//Check l / c + 1
 			if (c+1 <= columns) {
-				getCellByCoordinates(l, c+1).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l, c+1);
 			}
 
 			//Check l+1 / c - 1
 			if (l+1 <= lines && c-1 >= 1) {
-				getCellByCoordinates(l+1, c-1).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l+1, c-1);
 			}
 
 			//Check l+1 / c
 			if (l+1 <= lines) {
-				getCellByCoordinates(l+1, c).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l+1, c);
 			}
 
 			//Check l+1 / c+1
 			if (l+1 <= lines && c+1 <= columns) {
-				getCellByCoordinates(l+1, c+1).incrementBombsInNeighborhood();
+				incrementSingleNeighborCell(l+1, c+1);
 			}
 		}
 
@@ -189,7 +195,7 @@ class FieldManager {
 
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					cout << getCellByCoordinates(i,j).getIsBomb() << " ";
+					cout << getCellByCoordinates(i,j).getBombsInNeighborhood() << " ";
 				}
 				cout << endl;
             }
@@ -201,6 +207,13 @@ class FieldManager {
 				map<string, Cell>::iterator itr;
 				itr = field.find(key);
 				return itr->second;
+		}
+
+		void updateCell(Cell updatedCell, int l, int c){
+			map<string, Cell>::iterator itr;
+			string key = toStr(l) + "-" + toStr(c);
+			itr = field.find(key);
+			itr->second = updatedCell;
 		}
 
 
