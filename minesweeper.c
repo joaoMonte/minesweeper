@@ -192,10 +192,16 @@ class FieldManager {
 		}
 
 		void printField(){
-
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					cout << getCellByCoordinates(i,j).getBombsInNeighborhood() << " ";
+					Cell auxiliaryCell = getCellByCoordinates(i,j);
+					if (auxiliaryCell.getIsBomb()){
+						cout << "B ";
+					}
+					else {
+						cout << auxiliaryCell.getBombsInNeighborhood() << " ";
+					}  
+					
 				}
 				cout << endl;
             }
@@ -229,7 +235,7 @@ class FieldManager {
 
 int main() 
 {
-	FieldManager teste = FieldManager(9, 9, 7);
+	FieldManager teste = FieldManager(15, 15, 20);
 	teste.initializeField();
 	teste.printField();
 	//Cell t1 = Cell(false);
