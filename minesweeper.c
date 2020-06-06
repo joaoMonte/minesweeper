@@ -251,6 +251,7 @@ class FieldManager {
 			Cell cell = getCellByCoordinates(l, c);
 			if (cell.alreadyRevealed()){
 				cout << "This cell have been already revealed! Choice other cell!" << endl;
+				output = 1;
 			}
 			else {
 				if (cell.getIsBomb()){
@@ -477,17 +478,6 @@ class FieldManager {
 
 int main() 
 {
-	//FieldManager teste = FieldManager(15, 15, 20);
-	//teste.initializeField();
-	//teste.chooseCell(1,1);
-	//teste.chooseCell(1,1);
-	//teste.chooseCell(1,2);
-	//teste.chooseCell(1,3);
-	//teste.chooseCell(15,3);
-	//teste.chooseCell(5,15);
-	//teste.chooseCell(2,12);
-	//teste.chooseCell(3,5);
-
 	int numberOfBombs = 20;
 	int lines = 10;
 	int columns = 10;
