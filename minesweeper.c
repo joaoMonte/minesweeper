@@ -80,6 +80,7 @@ class FieldManager {
 			lines = l;
 			columns = c;
 			numberOfBombs = n;
+			revealedCells = 0;
 			generateBombPositions();
 
 		}
@@ -224,7 +225,8 @@ class FieldManager {
 			itr->second = updatedCell;
 		}
 
-		void chooseCell(int l, int c){
+		int chooseCell(int l, int c){
+			int output;
 			Cell cell = getCellByCoordinates(l, c)
 			if cell.alreadyRevealed(){
 				cout << "This cell have been already revealed! Choice other cell!"
@@ -253,6 +255,8 @@ class FieldManager {
 						}
 						cout << endl;
            	 		}
+					//output == 0 -> game over!	
+					output = 0;
 				}
 
 				else if (cell.getBombsInNeighborhood() > 0){
@@ -270,6 +274,7 @@ class FieldManager {
 		int lines;
 		int columns;
 		int numberOfBombs;
+		int revealedCells;
 		map<string, Cell> field;
 		map<int, string> bombsPositions;
 
