@@ -290,13 +290,81 @@ class FieldManager {
 				}
 		}
 
+		vector<string> split(string str){
+			vector<string> output;
+			string buffer = "";
+			int i = 0;
+			while i < (str.length()){
+				if (str[i] != "-"){
+					buffer += str[i];
+				}
+				else{
+					output.push_back(buffer);
+					buffer = "";
+				}
+				i++;
+			}
+			return output;
+		}
+
+
 		void revealGroupOfCells(int l, int c){
 			Queue queue = Queue();
+			string key = toStr(l) + "-" + toStr(c);
+			queue.enqueue(key)
 
-			do {
+			while (!queue.isEmpty()) {
+
+				Cell currentCell = getCellByCoordinates(l,c);
+				if (!currentCell.alreadyRevealed()){
+					//If the cell has not been revealed, reveal it!
 
 
-			} while ();
+				}
+
+
+				//Check l-1 / c-1
+				if (l-1 >= 1 && c-1 >= 1) {
+					incrementSingleNeighborCell(l-1, c-1);
+				}
+
+				//Check l-1 / c
+				if (l-1 >= 1) {
+					incrementSingleNeighborCell(l-1, c);
+				}
+
+				//Check l-1 / c + 1
+				if (l-1 >= 1 && c+1 <= columns) {
+					incrementSingleNeighborCell(l-1, c+1);
+				}
+
+				//Check l / c - 1
+				if (c-1 >= 1) {
+					incrementSingleNeighborCell(l, c-1);
+				}
+
+				//Check l / c + 1
+				if (c+1 <= columns) {
+					incrementSingleNeighborCell(l, c+1);
+				}
+
+				//Check l+1 / c - 1
+				if (l+1 <= lines && c-1 >= 1) {
+					incrementSingleNeighborCell(l+1, c-1);
+				}
+
+				//Check l+1 / c
+				if (l+1 <= lines) {
+					incrementSingleNeighborCell(l+1, c);
+				}
+
+				//Check l+1 / c+1
+				if (l+1 <= lines && c+1 <= columns) {
+					incrementSingleNeighborCell(l+1, c+1);
+				}
+
+
+			} 
 		}
 
 
