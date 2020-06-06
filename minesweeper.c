@@ -261,12 +261,28 @@ class FieldManager {
 
 				else if (cell.getBombsInNeighborhood() > 0){
 					//Show only this cell!
+					cell.reveal();
+					revealedCells++;
+
+					updateCell(cell, l, c);
+					//output == 1 -> still playing
+					//output == 2 -> user won!
+					if (didUserWin()) {
+						output = 2;
+					}
+					else {
+						output = 1;
+					}
 				}
 
 				else{
 					//Show a group of cells!
 				}
 			}
+		}
+
+		bool didUserWin(){
+			return revealedCells + numberOfBombs == lines * columns
 		}
 
 
