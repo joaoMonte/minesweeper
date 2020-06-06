@@ -116,6 +116,7 @@ class FieldManager {
 					if (iter != bombsPositions.end()){
 						field.insert(pair<string, Cell>(key, Cell(true)));
 						//Save its position at the bombPositions map
+						//cout << key << endl;
 						iter->second = key;
 					}
 					else {
@@ -375,7 +376,9 @@ class FieldManager {
 						queue.enqueue(toStr(l-1) + "-" + toStr(c-1));
 					}
 					else{
-						revealCell(l-1, c-1);
+						if (!getCellByCoordinates(l-1, c-1).alreadyRevealed()){
+							revealCell(l-1, c-1);
+						}
 					}
 
 				}
@@ -387,7 +390,9 @@ class FieldManager {
 						queue.enqueue(toStr(l-1) + "-" + toStr(c));
 					}
 					else{
-						revealCell(l-1, c);
+						if (!getCellByCoordinates(l-1, c).alreadyRevealed()){
+							revealCell(l-1, c);
+						}
 					}
 				}
 
@@ -398,7 +403,9 @@ class FieldManager {
 						queue.enqueue(toStr(l-1) + "-" + toStr(c+1));
 					}
 					else{
-						revealCell(l-1, c+1);
+						if (!getCellByCoordinates(l-1, c+1).alreadyRevealed()){
+							revealCell(l-1, c+1);
+						}
 					}
 				}
 
@@ -409,7 +416,9 @@ class FieldManager {
 						queue.enqueue(toStr(l) + "-" + toStr(c-1));
 					}
 					else{
-						revealCell(l, c-1);
+						if (!getCellByCoordinates(l, c-1).alreadyRevealed()){
+							revealCell(l, c-1);
+						}
 					}
 				}
 
@@ -420,7 +429,9 @@ class FieldManager {
 						queue.enqueue(toStr(l) + "-" + toStr(c+1));
 					}
 					else{
-						revealCell(l, c+1);
+						if (!getCellByCoordinates(l, c+1).alreadyRevealed()){
+							revealCell(l, c+1);
+						}
 					}
 				}
 
@@ -431,7 +442,9 @@ class FieldManager {
 						queue.enqueue(toStr(l+1) + "-" + toStr(c-1));
 					}
 					else{
-						revealCell(l+1, c-1);
+						if (!getCellByCoordinates(l+1, c-1).alreadyRevealed()){
+							revealCell(l+1, c-1);
+						}
 					}
 				}
 
@@ -442,7 +455,9 @@ class FieldManager {
 						queue.enqueue(toStr(l+1) + "-" + toStr(c));
 					}
 					else{
-						revealCell(l+1, c);
+						if (!getCellByCoordinates(l+1, c).alreadyRevealed()){
+							revealCell(l+1, c);
+						}
 					}
 				}
 
@@ -453,7 +468,9 @@ class FieldManager {
 						queue.enqueue(toStr(l+1) + "-" + toStr(c+1));
 					}
 					else{
-						revealCell(l+1, c+1);
+						if (!getCellByCoordinates(l+1, c+1).alreadyRevealed()){
+							revealCell(l+1, c+1);
+						}
 					}
 				}
 			} 
@@ -464,6 +481,9 @@ class FieldManager {
 			return revealedCells + numberOfBombs == lines * columns;
 		}
 
+		int getRevealed(){
+			return revealedCells;
+		}
 
 	private:
 		int lines;
@@ -512,23 +532,30 @@ int main()
 
 				if (startOption != "Exit"){
 					userGuess = userField.split(startOption);
-					guessResult = userField.chooseCell(userGuess[0], userGuess[1]);
+					int userGuess_line = userGuess[0];
+					int userGuess_column = userGuess[1];
 
-					if (guessResult == 0){
-						cout << YELLOW << "-------------------------------" << RESET << endl; 
-						cout << YELLOW << "----------" << RED << "GAME OVER" << YELLOW << "------------" << endl;
-						cout << YELLOW << "-------------------------------" << RESET << endl;
-						break;
+					if (userGuess_line > lines || userGuess_column > columns){
+						cout << ">> Invalid guess! Try again" << endl;
 					}
+					else {
+						guessResult = userField.chooseCell(userGuess_line, userGuess_column);
 
-					else if (guessResult == 2){
-						cout << BLUE << "-------------------------------" << RESET << endl; 
-						cout << BLUE << "-----------" << GREEN << "YOU WIN!" << BLUE << "------------" << endl;
-						cout << BLUE << "--------" << GREEN << "CONGRATULATIONS :)" << BLUE << "-----" << endl;
-						cout << BLUE << "-------------------------------" << RESET << endl;
-						break;
+						if (guessResult == 0){
+							cout << YELLOW << "-------------------------------" << RESET << endl; 
+							cout << YELLOW << "----------" << RED << "GAME OVER" << YELLOW << "------------" << endl;
+							cout << YELLOW << "-------------------------------" << RESET << endl;
+							break;
+						}
+
+						else if (guessResult == 2){
+							cout << BLUE << "-------------------------------" << RESET << endl; 
+							cout << BLUE << "-----------" << GREEN << "YOU WIN!" << BLUE << "------------" << endl;
+							cout << BLUE << "--------" << GREEN << "CONGRATULATIONS :)" << BLUE << "-----" << endl;
+							cout << BLUE << "-------------------------------" << RESET << endl;
+							break;
+						}
 					}
-
 				}
 
 			} while (startOption != "Exit");
