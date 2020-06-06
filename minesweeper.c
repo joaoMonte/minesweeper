@@ -62,6 +62,9 @@ class Cell {
 		void setFlag(){
 			isFlag = true;
 		}
+		bool getIsFlag(){
+			return isFlag;
+		}
 
 		void incrementBombsInNeighborhood(){
 			if (!isBomb) {
@@ -217,7 +220,12 @@ class FieldManager {
 						}
 					}
 					else {
-						cout << "# ";
+						if (auxiliaryCell.getIsFlag()){
+							cout << YELLOW << "F " << RESET;
+						}
+						else {
+							cout << "# ";
+						}
 					}  
 					
 				}
@@ -485,6 +493,12 @@ class FieldManager {
 			return revealedCells;
 		}
 
+		void setFlag(int l, int c){
+			Cell cell = getCellByCoordinates(l, c);
+			cell.setFlag();
+			updateCell(cell, l, c);
+		}
+
 	private:
 		int lines;
 		int columns;
@@ -517,7 +531,10 @@ int main()
 		if (option == "Start"){
 			//start the game
 			string startOption = "";
+			string flagPosition;
+			string cellChoice;
 			vector<int> userGuess;
+			vector<int> flagChoice;
 			int guessResult = 4;
 			cout << ">> The game will start!" << endl;
 			FieldManager userField = FieldManager(lines, columns, numberOfBombs);
@@ -525,13 +542,17 @@ int main()
 			userField.printField();
 			
 
-			do {
-				cout << ">> Type the line and the column of desired cell to click! Format: line-column" << endl;
-				cout << ">> You can type also Exit to quit to the main menu" << endl << ">> ";
+			while (startOption != "E") {
+				cout << ">> Type" << endl;
+				cout << ">> G - Guess the line and the column of desired cell to click!" << endl;
+				cout << ">> F - Set a flag on the field" << endl;
+				cout << ">> E - Exit to the main menu" << endl << ">> ";
 				cin >> startOption;
 
-				if (startOption != "Exit"){
-					userGuess = userField.split(startOption);
+				if (startOption == "G"){
+					cout << ">> Type your guess using the format line-column" << endl << ">> ";
+					cin >> cellChoice;
+					userGuess = userField.split(cellChoice);
 					int userGuess_line = userGuess[0];
 					int userGuess_column = userGuess[1];
 
@@ -545,7 +566,7 @@ int main()
 							cout << YELLOW << "-------------------------------" << RESET << endl; 
 							cout << YELLOW << "----------" << RED << "GAME OVER" << YELLOW << "------------" << endl;
 							cout << YELLOW << "-------------------------------" << RESET << endl;
-							break;
+							startOption = "E";
 						}
 
 						else if (guessResult == 2){
@@ -553,12 +574,30 @@ int main()
 							cout << BLUE << "-----------" << GREEN << "YOU WIN!" << BLUE << "------------" << endl;
 							cout << BLUE << "--------" << GREEN << "CONGRATULATIONS :)" << BLUE << "-----" << endl;
 							cout << BLUE << "-------------------------------" << RESET << endl;
-							break;
+							startOption = "E";
 						}
 					}
 				}
+				else if (startOption == "F"){
+					cout << ">> Type your flag location using the format line-column" << endl << ">> ";
+					cin >> flagPosition;
+					flagChoice = userField.split(flagPosition); 
+					int flag_line = flagChoice[0];
+					int flag_column = flagChoice[1];
+					userField.setFlag(flag_line, flag_column);
+					userField.printField();
+					if (flag_line > lines || flag_column > columns){
+						cout << ">> Invalid location! Try again" << endl;
+					}
 
-			} while (startOption != "Exit");
+				}
+
+				else {
+					if (startOption != "E" && startOption != "F" && startOption != "G"){
+						cout << ">> Invalid option!" << endl;
+					}
+				}
+			} while (startOption != "E");
 			
 			cout << ">> Returning to the main menu" << endl;
 
