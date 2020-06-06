@@ -496,7 +496,8 @@ int main()
 		cout << RED << "-------------------------------" << RESET << endl; 
 		cout << RED << "----------" << YELLOW << "MINESWEEPER" << RED << "----------" << endl;
 		cout << RED << "-------------------------------" << RESET << endl;
-		cout << ">> Type" << endl << ">> Start - begin the game" << ">> Options - choose the game settings" << endl;
+		cout << ">> Type" << endl << ">> Start - begin the game" << endl;
+		cout << ">> Options - choose the game settings" << endl;
 		cout << ">> Exit - closes the application" << endl;
 		cout << ">> ";
 		cin >> option;
@@ -519,11 +520,12 @@ int main()
 					validSetup = true;
 				}
 				else{
-					cout << endl << ">> Your setup is invalid. The field must have at least 1 cell which isn't a bomb.";
-					cout << endl << ">> Try again" << endl;
+					cout << ">> Your setup is invalid. The field must have at least 1 cell which isn't a bomb.";
+					cout << ">> Try again" << endl;
 				}
 
 			} while(!validSetup);
+			cout << ">> Settings updated! Returning to the main menu" << endl;
 		}
 		else if (option != "Start" && option != "Options" && option != "Exit"){
 			//Invalid option
@@ -532,6 +534,6 @@ int main()
  
 	}
 
-	cout << ">> Bye-bye. See you soon!";
+	cout << ">> Bye-bye. See you soon!" << endl;
 	return 0;
 } 
