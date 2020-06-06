@@ -259,12 +259,19 @@ class FieldManager {
 					output = 0;
 				}
 
-				else if (cell.getBombsInNeighborhood() > 0){
+				else {
+
 					//Show only this cell!
 					cell.reveal();
 					revealedCells++;
-
 					updateCell(cell, l, c);
+					
+					if (cell.getBombsInNeighborhood() == 0){
+						//if this cell hasn't a number, we need to check if
+						//there are more cells to reveal! it will be did by the method
+						//revealgroupofCells
+					}
+
 					//output == 1 -> still playing
 					//output == 2 -> user won!
 					if (didUserWin()) {
@@ -273,13 +280,14 @@ class FieldManager {
 					else {
 						output = 1;
 					}
-				}
 
-				else{
-					//Show a group of cells!
 				}
-			}
 		}
+
+		void revealGroupOfCells(int l, int c){
+
+		}
+
 
 		bool didUserWin(){
 			return revealedCells + numberOfBombs == lines * columns
