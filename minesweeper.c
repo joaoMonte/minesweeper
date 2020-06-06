@@ -233,6 +233,26 @@ class FieldManager {
 				if (cell.getIsBomb()){
 					//show all bombs!
 					//game over!
+					for (int i = 1; i <= lines; i++){
+						for (int j = 1; j <= columns; j++){
+							Cell auxiliaryCell = getCellByCoordinates(i,j);
+							//If the cell is a bomb, show it!
+							if (auxiliaryCell.getIsBomb()){
+								cout << "B ";
+							}
+							else {
+								//If the cell has been revealed, show its value.
+								if (auxiliaryCell.alreadyRevealed()){
+									cout << auxiliaryCell.getBombsInNeighborhood() << " ";
+								}
+								else{
+									//Else, stay it hidden, as the game does
+									cout << "# ";
+								}
+							}
+						}
+						cout << endl;
+           	 		}
 				}
 
 				else if (cell.getBombsInNeighborhood() > 0){
