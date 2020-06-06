@@ -198,11 +198,11 @@ class FieldManager {
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
 					Cell auxiliaryCell = getCellByCoordinates(i,j);
-					if (auxiliaryCell.getIsBomb()){
-						cout << "B ";
+					if (auxiliaryCell.alreadyRevealed()){
+						cout << auxiliaryCell.getBombsInNeighborhood() << " ";
 					}
 					else {
-						cout << auxiliaryCell.getBombsInNeighborhood() << " ";
+						cout << "# ";
 					}  
 					
 				}
@@ -278,6 +278,7 @@ class FieldManager {
 						revealGroupOfCells(l, c);
 					}
 
+					printField();
 					//output == 1 -> still playing
 					//output == 2 -> user won!
 					if (didUserWin()) {
@@ -310,62 +311,119 @@ class FieldManager {
 		}
 
 
-		void revealGroupOfCells(int l, int c){
+		void revealGroupOfCells(int starter_l, int starter_c){
+			//This method traverse the field map to select the cells which will be showed
+			//Its use an
 			Queue queue = Queue();
-			string key = toStr(l) + "-" + toStr(c);
-			queue.enqueue(key)
+			string key = toStr(starter_l) + "-" + toStr(starter_c);
+			vector<int> coordinates;
+			queue.enqueue(key);
+			int l;
+			int c;
 
 			while (!queue.isEmpty()) {
+				
+				key = queue.dequeue();
+				coordinates = split(key);
+				l = coordinates[0];
+				c = coordinates[1];
 
 				Cell currentCell = getCellByCoordinates(l,c);
 				if (!currentCell.alreadyRevealed()){
 					//If the cell has not been revealed, reveal it!
-
-
+					revealCell(l, c);
 				}
 
-
 				//Check l-1 / c-1
+				//If it is a 0/empty cell we add it the queue to ve analysed about its neighbor at next iteration
+				//else, we just reveal it
 				if (l-1 >= 1 && c-1 >= 1) {
-					incrementSingleNeighborCell(l-1, c-1);
+					Cell auxiliaryCell = getCellByCoordinates(l-1, c-1);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l-1) + "-" + toStr(c-1));
+					}
+					else{
+						revealCell(l-1, c-1);
+					}
+
 				}
 
 				//Check l-1 / c
 				if (l-1 >= 1) {
-					incrementSingleNeighborCell(l-1, c);
+					Cell auxiliaryCell = getCellByCoordinates(l-1, c);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l-1) + "-" + toStr(c));
+					}
+					else{
+						revealCell(l-1, c);
+					}
 				}
 
 				//Check l-1 / c + 1
 				if (l-1 >= 1 && c+1 <= columns) {
-					incrementSingleNeighborCell(l-1, c+1);
+					Cell auxiliaryCell = getCellByCoordinates(l-1, c+1);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l-1) + "-" + toStr(c+1));
+					}
+					else{
+						revealCell(l-1, c+1);
+					}
 				}
 
 				//Check l / c - 1
 				if (c-1 >= 1) {
-					incrementSingleNeighborCell(l, c-1);
+					Cell auxiliaryCell = getCellByCoordinates(l, c-1);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l) + "-" + toStr(c-1));
+					}
+					else{
+						revealCell(l, c-1);
+					}
 				}
 
 				//Check l / c + 1
 				if (c+1 <= columns) {
-					incrementSingleNeighborCell(l, c+1);
+					Cell auxiliaryCell = getCellByCoordinates(l, c+1);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l) + "-" + toStr(c+1));
+					}
+					else{
+						revealCell(l, c+1);
+					}
 				}
 
 				//Check l+1 / c - 1
 				if (l+1 <= lines && c-1 >= 1) {
-					incrementSingleNeighborCell(l+1, c-1);
+					Cell auxiliaryCell = getCellByCoordinates(l+1, c-1);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l+1) + "-" + toStr(c-1));
+					}
+					else{
+						revealCell(l+1, c-1);
+					}
 				}
 
 				//Check l+1 / c
 				if (l+1 <= lines) {
-					incrementSingleNeighborCell(l+1, c);
+					Cell auxiliaryCell = getCellByCoordinates(l+1, c);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l+1) + "-" + toStr(c));
+					}
+					else{
+						revealCell(l+1, c);
+					}
 				}
 
 				//Check l+1 / c+1
 				if (l+1 <= lines && c+1 <= columns) {
-					incrementSingleNeighborCell(l+1, c+1);
+					Cell auxiliaryCell = getCellByCoordinates(l+1, c+1);
+					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+						queue.enqueue(toStr(l+1) + "-" + toStr(c+1));
+					}
+					else{
+						revealCell(l+1, c+1);
+					}
 				}
-
-
 			} 
 		}
 
