@@ -292,6 +292,13 @@ class FieldManager {
 			}
 		}
 
+		int toInt(string str){
+			stringstream auxiliary(str); 
+			int output; 
+    		auxiliary >> output;
+			return output; 
+		}
+
 		vector<int> split(string str){
 			vector<int> output;
 			string buffer = "";
@@ -302,12 +309,16 @@ class FieldManager {
 					buffer += str[i];
 				}
 				else{
-					number = std::stoi(buffer)
+					number = toInt(buffer);
 					output.push_back(number);
 					buffer = "";
 				}
 				i++;
 			}
+			//add the last buffer to the outpu. 
+			//Because the loop exits before did it
+			number = toInt(buffer);
+			output.push_back(number);
 			return output;
 		}
 
@@ -448,7 +459,8 @@ class FieldManager {
 int main() 
 {
 	FieldManager teste = FieldManager(15, 15, 20);
-	teste.split("12-12");
+	vector<int> t1 = teste.split("12-12");
+	//cout << t1[0] << endl << t1[1];
 	//teste.initializeField();
 	//teste.printField();
 	//Cell t1 = Cell(false);
