@@ -94,7 +94,7 @@ class FieldManager {
 		void initializeField(){
 			//Fill the field with cell instances
 			string key;
-			map<int, bool>::iterator iter;
+			map<int, string>::iterator iter;
 			//The position counter will know when the specified position is a bomb position.
 			//It reach this objective checking on the bombPositions map.
 			int positionCounter = 1;
@@ -105,6 +105,8 @@ class FieldManager {
 					//If the current position is a bomb position, we will create the cell as bomb
 					if (iter != bombsPositions.end()){
 						field.insert(pair<string, Cell>(key, Cell(true)));
+						//Save its position at the bombPositions map
+						iter->second = key;
 					}
 					else {
 						field.insert(pair<string, Cell>(key, Cell(false)));
@@ -126,7 +128,7 @@ class FieldManager {
 
 		void generateBombPositions(){
 			int randomNumber;
-			map<int, bool>::iterator iter;
+			map<int, string>::iterator iter;
 			int i = 1;
 			while(i <= numberOfBombs){
 				randomNumber = rand() % (lines*columns) + 1;
@@ -135,7 +137,7 @@ class FieldManager {
 				//If these number already exists on the map, we need to generate
 				// other random number for a bomb position
 				if (iter == bombsPositions.end()){
-					bombsPositions.insert(pair<int, bool>(randomNumber, true)); 
+					bombsPositions.insert(pair<int, string>(randomNumber, " ")); 
 					i++;
 				}
 			}
@@ -249,7 +251,7 @@ class FieldManager {
 		int columns;
 		int numberOfBombs;
 		map<string, Cell> field;
-		map<int, bool> bombsPositions;
+		map<int, string> bombsPositions;
 
 };
 
