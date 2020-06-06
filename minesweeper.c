@@ -475,7 +475,7 @@ class FieldManager {
 
 int main() 
 {
-	FieldManager teste = FieldManager(15, 15, 20);
+	//FieldManager teste = FieldManager(15, 15, 20);
 	//teste.initializeField();
 	//teste.chooseCell(1,1);
 	//teste.chooseCell(1,1);
@@ -488,7 +488,7 @@ int main()
 
 	int numberOfBombs = 20;
 	int lines = 10;
-	int columns = 10
+	int columns = 10;
 	string option = "";
 	bool validSetup = false;
 
@@ -498,7 +498,7 @@ int main()
 		cout << RED << "-------------------------------" << RESET << endl;
 		cout << ">> Type" << endl << ">> Start - begin the game" << ">> Options - choose the game settings" << endl;
 		cout << ">> Exit - closes the application" << endl;
-		cout << ">> "
+		cout << ">> ";
 		cin >> option;
 
 		if (option == "Start"){
@@ -519,11 +519,11 @@ int main()
 					validSetup = true;
 				}
 				else{
-					cout << endl << ">> Your setup is invalid. The field must have at least 1 cell which isn't a bomb."
-					count << endl << ">> Try again" << endl;
+					cout << endl << ">> Your setup is invalid. The field must have at least 1 cell which isn't a bomb.";
+					cout << endl << ">> Try again" << endl;
 				}
 
-			} while(!validSetup)
+			} while(!validSetup);
 		}
 		else if (option != "Start" && option != "Options" && option != "Exit"){
 			//Invalid option
@@ -532,6 +532,6 @@ int main()
  
 	}
 
-	cout << ">> Bye-bye. See you soon!"
+	cout << ">> Bye-bye. See you soon!";
 	return 0;
 } 
