@@ -7,7 +7,14 @@
 #include "stdlib.h"
 
 
+
+
 using namespace std; 
+
+#define RESET   "\033[0m"
+#define RED     "\033[31m" 
+#define BLUE    "\033[34m"
+#define WHITE   "\033[37m"
 
 class Queue {
 	public:
@@ -199,7 +206,12 @@ class FieldManager {
 				for (int j = 1; j <= columns; j++){
 					Cell auxiliaryCell = getCellByCoordinates(i,j);
 					if (auxiliaryCell.alreadyRevealed()){
-						cout << auxiliaryCell.getBombsInNeighborhood() << " ";
+						if (auxiliaryCell.getBombsInNeighborhood() > 0){
+							cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+						}
+						else {
+							cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+						}
 					}
 					else {
 						cout << "# ";
@@ -247,12 +259,17 @@ class FieldManager {
 							Cell auxiliaryCell = getCellByCoordinates(i,j);
 							//If the cell is a bomb, show it!
 							if (auxiliaryCell.getIsBomb()){
-								cout << "B ";
+								cout << RED << "B " << RESET;
 							}
 							else {
 								//If the cell has been revealed, show its value.
 								if (auxiliaryCell.alreadyRevealed()){
-									cout << auxiliaryCell.getBombsInNeighborhood() << " ";
+									if (auxiliaryCell.getBombsInNeighborhood() > 0){
+										cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+									}
+									else {
+										cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+									}
 								}
 								else{
 									//Else, stay it hidden, as the game does
@@ -463,6 +480,10 @@ int main()
 	teste.chooseCell(1,1);
 	teste.chooseCell(1,2);
 	teste.chooseCell(1,3);
+	//teste.chooseCell(15,3);
+	teste.chooseCell(5,15);
+	teste.chooseCell(2,12);
+	teste.chooseCell(3,5);
 
 	
 	//teste.printField();
