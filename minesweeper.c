@@ -235,8 +235,8 @@ class FieldManager {
 		int chooseCell(int l, int c){
 			int output;
 			Cell cell = getCellByCoordinates(l, c);
-			if cell.alreadyRevealed(){
-				cout << "This cell have been already revealed! Choice other cell!"
+			if (cell.alreadyRevealed()){
+				cout << "This cell have been already revealed! Choice other cell!";
 			}
 			else {
 				if (cell.getIsBomb()){
@@ -289,19 +289,20 @@ class FieldManager {
 					}
 
 				}
+			}
 		}
 
 		vector<int> split(string str){
-			vector<string> output;
+			vector<int> output;
 			string buffer = "";
 			int i = 0;
 			int number;
-			while i < (str.length()){
+			while (i < str.length()){
 				if (str[i] != "-"){
 					buffer += str[i];
 				}
 				else{
-					number = stoi(buffer)
+					number = std::stoi(buffer)
 					output.push_back(number);
 					buffer = "";
 				}
@@ -429,7 +430,7 @@ class FieldManager {
 
 
 		bool didUserWin(){
-			return revealedCells + numberOfBombs == lines * columns
+			return revealedCells + numberOfBombs == lines * columns;
 		}
 
 
