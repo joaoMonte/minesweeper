@@ -309,6 +309,7 @@ class FieldManager {
 
 				}
 			}
+			return output;
 		}
 
 		int toInt(string str){
