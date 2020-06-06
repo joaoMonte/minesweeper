@@ -236,7 +236,7 @@ class FieldManager {
 			int output;
 			Cell cell = getCellByCoordinates(l, c);
 			if (cell.alreadyRevealed()){
-				cout << "This cell have been already revealed! Choice other cell!";
+				cout << "This cell have been already revealed! Choice other cell!" << endl;
 			}
 			else {
 				if (cell.getIsBomb()){
@@ -334,7 +334,6 @@ class FieldManager {
 			int c;
 
 			while (!queue.isEmpty()) {
-				
 				key = queue.dequeue();
 				coordinates = split(key);
 				l = coordinates[0];
@@ -351,7 +350,7 @@ class FieldManager {
 				//else, we just reveal it
 				if (l-1 >= 1 && c-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l-1, c-1);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l-1) + "-" + toStr(c-1));
 					}
 					else{
@@ -363,7 +362,7 @@ class FieldManager {
 				//Check l-1 / c
 				if (l-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l-1, c);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l-1) + "-" + toStr(c));
 					}
 					else{
@@ -374,7 +373,7 @@ class FieldManager {
 				//Check l-1 / c + 1
 				if (l-1 >= 1 && c+1 <= columns) {
 					Cell auxiliaryCell = getCellByCoordinates(l-1, c+1);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l-1) + "-" + toStr(c+1));
 					}
 					else{
@@ -385,7 +384,7 @@ class FieldManager {
 				//Check l / c - 1
 				if (c-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l, c-1);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l) + "-" + toStr(c-1));
 					}
 					else{
@@ -396,7 +395,7 @@ class FieldManager {
 				//Check l / c + 1
 				if (c+1 <= columns) {
 					Cell auxiliaryCell = getCellByCoordinates(l, c+1);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l) + "-" + toStr(c+1));
 					}
 					else{
@@ -407,7 +406,7 @@ class FieldManager {
 				//Check l+1 / c - 1
 				if (l+1 <= lines && c-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l+1, c-1);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l+1) + "-" + toStr(c-1));
 					}
 					else{
@@ -418,7 +417,7 @@ class FieldManager {
 				//Check l+1 / c
 				if (l+1 <= lines) {
 					Cell auxiliaryCell = getCellByCoordinates(l+1, c);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l+1) + "-" + toStr(c));
 					}
 					else{
@@ -429,7 +428,7 @@ class FieldManager {
 				//Check l+1 / c+1
 				if (l+1 <= lines && c+1 <= columns) {
 					Cell auxiliaryCell = getCellByCoordinates(l+1, c+1);
-					if (auxiliaryCell.getBombsInNeighborhood() == 0){
+					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
 						queue.enqueue(toStr(l+1) + "-" + toStr(c+1));
 					}
 					else{
@@ -459,10 +458,15 @@ class FieldManager {
 int main() 
 {
 	FieldManager teste = FieldManager(15, 15, 20);
-	vector<int> t1 = teste.split("12-12");
-	//cout << t1[0] << endl << t1[1];
-	//teste.initializeField();
+	teste.initializeField();
+	teste.chooseCell(1,1);
+	teste.chooseCell(1,1);
+	teste.chooseCell(1,2);
+	teste.chooseCell(1,3);
+
+	
 	//teste.printField();
+	
 	//Cell t1 = Cell(false);
 	//map<int, Cell> teste; 
 	//map<int, Cell>::iterator itr;
