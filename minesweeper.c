@@ -290,16 +290,18 @@ class FieldManager {
 				}
 		}
 
-		vector<string> split(string str){
+		vector<int> split(string str){
 			vector<string> output;
 			string buffer = "";
 			int i = 0;
+			int number;
 			while i < (str.length()){
 				if (str[i] != "-"){
 					buffer += str[i];
 				}
 				else{
-					output.push_back(buffer);
+					number = stoi(buffer)
+					output.push_back(number);
 					buffer = "";
 				}
 				i++;
