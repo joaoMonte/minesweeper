@@ -270,6 +270,7 @@ class FieldManager {
 						//if this cell hasn't a number, we need to check if
 						//there are more cells to reveal! it will be did by the method
 						//revealgroupofCells
+						revealGroupOfCells(l, c);
 					}
 
 					//output == 1 -> still playing
@@ -285,7 +286,11 @@ class FieldManager {
 		}
 
 		void revealGroupOfCells(int l, int c){
+			Queue queue = Queue();
 
+			do {
+
+			} while ();
 		}
 
 
