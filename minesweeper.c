@@ -527,20 +527,11 @@ int main()
 		}
 		else if (option != "Start" && option != "Options" && option != "Exit"){
 			//Invalid option
+			cout << ">> Invalid option!" << endl;
 		}
  
 	}
-	
-	
-	//teste.printField();
-	
-	//Cell t1 = Cell(false);
-	//map<int, Cell> teste; 
-	//map<int, Cell>::iterator itr;
-	
-	//teste.insert(pair<int, Cell>(1, t1)); 
-	//itr = teste.find(1);
-	//cout << itr->second.isBomb;
 
+	cout << ">> Bye-bye. See you soon!"
 	return 0;
 } 
