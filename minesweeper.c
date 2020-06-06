@@ -208,7 +208,7 @@ class FieldManager {
 				}
 				cout << endl;
             }
-			
+			cout << endl;
 		}
 
 		Cell getCellByCoordinates(int line, int column){
