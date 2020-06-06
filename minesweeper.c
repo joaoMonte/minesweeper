@@ -222,6 +222,27 @@ class FieldManager {
 			itr->second = updatedCell;
 		}
 
+		void chooseCell(int l, int c){
+			Cell cell = getCellByCoordinates(l, c)
+			if cell.alreadyRevealed(){
+				cout << "This cell have been already revealed! Choice other cell!"
+			}
+			else {
+				if (cell.getIsBomb()){
+					//show all bombs!
+					//game over!
+				}
+
+				else if (cell.getBombsInNeighborhood() > 0){
+					//Show only this cell!
+				}
+
+				else{
+					//Show a group of cells!
+				}
+			}
+		}
+
 
 	private:
 		int lines;
