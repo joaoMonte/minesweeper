@@ -225,9 +225,16 @@ class FieldManager {
 			itr->second = updatedCell;
 		}
 
+		void revealCell(int l, int c){
+			Cell cell = getCellByCoordinates(l, c);
+			cell.reveal();
+			revealedCells++;
+			updateCell(cell, l, c);
+		}
+
 		int chooseCell(int l, int c){
 			int output;
-			Cell cell = getCellByCoordinates(l, c)
+			Cell cell = getCellByCoordinates(l, c);
 			if cell.alreadyRevealed(){
 				cout << "This cell have been already revealed! Choice other cell!"
 			}
@@ -262,10 +269,8 @@ class FieldManager {
 				else {
 
 					//Show only this cell!
-					cell.reveal();
-					revealedCells++;
-					updateCell(cell, l, c);
-					
+					revealCell(l, c);
+
 					if (cell.getBombsInNeighborhood() == 0){
 						//if this cell hasn't a number, we need to check if
 						//there are more cells to reveal! it will be did by the method
@@ -289,6 +294,7 @@ class FieldManager {
 			Queue queue = Queue();
 
 			do {
+
 
 			} while ();
 		}
