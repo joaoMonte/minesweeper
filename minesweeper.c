@@ -486,23 +486,44 @@ int main()
 	//teste.chooseCell(2,12);
 	//teste.chooseCell(3,5);
 
-	int i;
-	int j;
+	int numberOfBombs = 20;
+	int lines = 10;
+	int columns = 10
 	string option = "";
+	bool validSetup = false;
+
 	while (option != "Exit"){
 		cout << RED << "-------------------------------" << RESET << endl; 
 		cout << RED << "----------" << YELLOW << "MINESWEEPER" << RED << "----------" << endl;
 		cout << RED << "-------------------------------" << RESET << endl;
 		cout << ">> Type" << endl << ">> Start - begin the game" << ">> Options - choose the game settings" << endl;
 		cout << ">> Exit - closes the application" << endl;
-		cout << ">>"
+		cout << ">> "
 		cin >> option;
 
 		if (option == "Start"){
 			//start the game
+			cout << ">> The game will start!" << endl;
 		}
 		else if (option == "Options"){
-			//go to settings
+			do {
+				//go to settings
+				cout << ">> Type the number of lines of your minesweeper field! (default: 10)" << endl << ">> ";
+				cin >> lines;
+				cout << ">> Type the number of columns of your minesweeper field! (default: 10)" << endl << ">> ";
+				cin >> columns;
+				cout << ">> Type the number of bombs of your minesweeper field! (default: 10)" << endl << ">> ";
+				cin >> numberOfBombs;
+
+				if (numberOfBombs < lines * columns){
+					validSetup = true;
+				}
+				else{
+					cout << endl << ">> Your setup is invalid. The field must have at least 1 cell which isn't a bomb."
+					count << endl << ">> Try again" << endl;
+				}
+
+			} while(!validSetup)
 		}
 		else if (option != "Start" && option != "Options" && option != "Exit"){
 			//Invalid option
