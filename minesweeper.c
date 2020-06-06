@@ -15,6 +15,7 @@ using namespace std;
 #define RED     "\033[31m" 
 #define BLUE    "\033[34m"
 #define WHITE   "\033[37m"
+#define YELLOW  "\033[33m" 
 
 class Queue {
 	public:
@@ -475,16 +476,40 @@ class FieldManager {
 int main() 
 {
 	FieldManager teste = FieldManager(15, 15, 20);
-	teste.initializeField();
-	teste.chooseCell(1,1);
-	teste.chooseCell(1,1);
-	teste.chooseCell(1,2);
-	teste.chooseCell(1,3);
+	//teste.initializeField();
+	//teste.chooseCell(1,1);
+	//teste.chooseCell(1,1);
+	//teste.chooseCell(1,2);
+	//teste.chooseCell(1,3);
 	//teste.chooseCell(15,3);
-	teste.chooseCell(5,15);
-	teste.chooseCell(2,12);
-	teste.chooseCell(3,5);
+	//teste.chooseCell(5,15);
+	//teste.chooseCell(2,12);
+	//teste.chooseCell(3,5);
 
+	int i;
+	int j;
+	string option = "";
+	while (option != "Exit"){
+		cout << RED << "-------------------------------" << RESET << endl; 
+		cout << RED << "----------" << YELLOW << "MINESWEEPER" << RED << "----------" << endl;
+		cout << RED << "-------------------------------" << RESET << endl;
+		cout << ">> Type" << endl << ">> Start - begin the game" << ">> Options - choose the game settings" << endl;
+		cout << ">> Exit - closes the application" << endl;
+		cout << ">>"
+		cin >> option;
+
+		if (option == "Start"){
+			//start the game
+		}
+		else if (option == "Options"){
+			//go to settings
+		}
+		else if (option != "Start" && option != "Options" && option != "Exit"){
+			//Invalid option
+		}
+ 
+	}
+	
 	
 	//teste.printField();
 	
