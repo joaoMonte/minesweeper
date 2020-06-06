@@ -15,6 +15,8 @@ using namespace std;
 #define RED     "\033[31m" 
 #define BLUE    "\033[34m"
 #define WHITE   "\033[37m"
+#define YELLOW  "\033[33m" 
+#define GREEN   "\033[32m" 
 
 class Queue {
 	public:
@@ -114,6 +116,7 @@ class FieldManager {
 					if (iter != bombsPositions.end()){
 						field.insert(pair<string, Cell>(key, Cell(true)));
 						//Save its position at the bombPositions map
+						//cout << key << endl;
 						iter->second = key;
 					}
 					else {
@@ -249,6 +252,7 @@ class FieldManager {
 			Cell cell = getCellByCoordinates(l, c);
 			if (cell.alreadyRevealed()){
 				cout << "This cell have been already revealed! Choice other cell!" << endl;
+				output = 1;
 			}
 			else {
 				if (cell.getIsBomb()){
@@ -307,6 +311,7 @@ class FieldManager {
 
 				}
 			}
+			return output;
 		}
 
 		int toInt(string str){
@@ -371,7 +376,9 @@ class FieldManager {
 						queue.enqueue(toStr(l-1) + "-" + toStr(c-1));
 					}
 					else{
-						revealCell(l-1, c-1);
+						if (!getCellByCoordinates(l-1, c-1).alreadyRevealed()){
+							revealCell(l-1, c-1);
+						}
 					}
 
 				}
@@ -383,7 +390,9 @@ class FieldManager {
 						queue.enqueue(toStr(l-1) + "-" + toStr(c));
 					}
 					else{
-						revealCell(l-1, c);
+						if (!getCellByCoordinates(l-1, c).alreadyRevealed()){
+							revealCell(l-1, c);
+						}
 					}
 				}
 
@@ -394,7 +403,9 @@ class FieldManager {
 						queue.enqueue(toStr(l-1) + "-" + toStr(c+1));
 					}
 					else{
-						revealCell(l-1, c+1);
+						if (!getCellByCoordinates(l-1, c+1).alreadyRevealed()){
+							revealCell(l-1, c+1);
+						}
 					}
 				}
 
@@ -405,7 +416,9 @@ class FieldManager {
 						queue.enqueue(toStr(l) + "-" + toStr(c-1));
 					}
 					else{
-						revealCell(l, c-1);
+						if (!getCellByCoordinates(l, c-1).alreadyRevealed()){
+							revealCell(l, c-1);
+						}
 					}
 				}
 
@@ -416,7 +429,9 @@ class FieldManager {
 						queue.enqueue(toStr(l) + "-" + toStr(c+1));
 					}
 					else{
-						revealCell(l, c+1);
+						if (!getCellByCoordinates(l, c+1).alreadyRevealed()){
+							revealCell(l, c+1);
+						}
 					}
 				}
 
@@ -427,7 +442,9 @@ class FieldManager {
 						queue.enqueue(toStr(l+1) + "-" + toStr(c-1));
 					}
 					else{
-						revealCell(l+1, c-1);
+						if (!getCellByCoordinates(l+1, c-1).alreadyRevealed()){
+							revealCell(l+1, c-1);
+						}
 					}
 				}
 
@@ -438,7 +455,9 @@ class FieldManager {
 						queue.enqueue(toStr(l+1) + "-" + toStr(c));
 					}
 					else{
-						revealCell(l+1, c);
+						if (!getCellByCoordinates(l+1, c).alreadyRevealed()){
+							revealCell(l+1, c);
+						}
 					}
 				}
 
@@ -449,7 +468,9 @@ class FieldManager {
 						queue.enqueue(toStr(l+1) + "-" + toStr(c+1));
 					}
 					else{
-						revealCell(l+1, c+1);
+						if (!getCellByCoordinates(l+1, c+1).alreadyRevealed()){
+							revealCell(l+1, c+1);
+						}
 					}
 				}
 			} 
@@ -460,6 +481,9 @@ class FieldManager {
 			return revealedCells + numberOfBombs == lines * columns;
 		}
 
+		int getRevealed(){
+			return revealedCells;
+		}
 
 	private:
 		int lines;
@@ -474,27 +498,99 @@ class FieldManager {
 
 int main() 
 {
-	FieldManager teste = FieldManager(15, 15, 20);
-	teste.initializeField();
-	teste.chooseCell(1,1);
-	teste.chooseCell(1,1);
-	teste.chooseCell(1,2);
-	teste.chooseCell(1,3);
-	//teste.chooseCell(15,3);
-	teste.chooseCell(5,15);
-	teste.chooseCell(2,12);
-	teste.chooseCell(3,5);
+	int numberOfBombs = 20;
+	int lines = 10;
+	int columns = 10;
+	string option = "";
+	bool validSetup = false;
 
-	
-	//teste.printField();
-	
-	//Cell t1 = Cell(false);
-	//map<int, Cell> teste; 
-	//map<int, Cell>::iterator itr;
-	
-	//teste.insert(pair<int, Cell>(1, t1)); 
-	//itr = teste.find(1);
-	//cout << itr->second.isBomb;
+	while (option != "Exit"){
+		cout << RED << "-------------------------------" << RESET << endl; 
+		cout << RED << "----------" << YELLOW << "MINESWEEPER" << RED << "----------" << endl;
+		cout << RED << "-------------------------------" << RESET << endl;
+		cout << ">> Type" << endl << ">> Start - begin the game" << endl;
+		cout << ">> Options - choose the game settings" << endl;
+		cout << ">> Exit - closes the application" << endl;
+		cout << ">> ";
+		cin >> option;
 
+		if (option == "Start"){
+			//start the game
+			string startOption = "";
+			vector<int> userGuess;
+			int guessResult = 4;
+			cout << ">> The game will start!" << endl;
+			FieldManager userField = FieldManager(lines, columns, numberOfBombs);
+			userField.initializeField();
+			userField.printField();
+			
+
+			do {
+				cout << ">> Type the line and the column of desired cell to click! Format: line-column" << endl;
+				cout << ">> You can type also Exit to quit to the main menu" << endl << ">> ";
+				cin >> startOption;
+
+				if (startOption != "Exit"){
+					userGuess = userField.split(startOption);
+					int userGuess_line = userGuess[0];
+					int userGuess_column = userGuess[1];
+
+					if (userGuess_line > lines || userGuess_column > columns){
+						cout << ">> Invalid guess! Try again" << endl;
+					}
+					else {
+						guessResult = userField.chooseCell(userGuess_line, userGuess_column);
+
+						if (guessResult == 0){
+							cout << YELLOW << "-------------------------------" << RESET << endl; 
+							cout << YELLOW << "----------" << RED << "GAME OVER" << YELLOW << "------------" << endl;
+							cout << YELLOW << "-------------------------------" << RESET << endl;
+							break;
+						}
+
+						else if (guessResult == 2){
+							cout << BLUE << "-------------------------------" << RESET << endl; 
+							cout << BLUE << "-----------" << GREEN << "YOU WIN!" << BLUE << "------------" << endl;
+							cout << BLUE << "--------" << GREEN << "CONGRATULATIONS :)" << BLUE << "-----" << endl;
+							cout << BLUE << "-------------------------------" << RESET << endl;
+							break;
+						}
+					}
+				}
+
+			} while (startOption != "Exit");
+			
+			cout << ">> Returning to the main menu" << endl;
+
+		}
+		else if (option == "Options"){
+			do {
+				//go to settings
+				cout << ">> Type the number of lines of your minesweeper field! (default: 10)" << endl << ">> ";
+				cin >> lines;
+				cout << ">> Type the number of columns of your minesweeper field! (default: 10)" << endl << ">> ";
+				cin >> columns;
+				cout << ">> Type the number of bombs of your minesweeper field! (default: 10)" << endl << ">> ";
+				cin >> numberOfBombs;
+
+				if (numberOfBombs < lines * columns){
+					validSetup = true;
+				}
+				else{
+					cout << ">> Your setup is invalid. The field must have at least 1 cell which isn't a bomb.";
+					cout << ">> Try again" << endl;
+				}
+
+			} while(!validSetup);
+			cout << ">> Settings updated! Returning to the main menu" << endl;
+		}
+		else if (option != "Start" && option != "Options" && option != "Exit"){
+			//Invalid option
+			cout << ">> Invalid option!" << endl;
+		}
+ 
+	}
+
+	cout << ">> Bye-bye. See you soon!" << endl;
 	return 0;
 } 
