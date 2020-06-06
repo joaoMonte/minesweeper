@@ -298,7 +298,7 @@ class FieldManager {
 			int i = 0;
 			int number;
 			while (i < str.length()){
-				if (str[i] != "-"){
+				if (str[i] != '-'){
 					buffer += str[i];
 				}
 				else{
@@ -448,8 +448,9 @@ class FieldManager {
 int main() 
 {
 	FieldManager teste = FieldManager(15, 15, 20);
-	teste.initializeField();
-	teste.printField();
+	teste.split("12-12");
+	//teste.initializeField();
+	//teste.printField();
 	//Cell t1 = Cell(false);
 	//map<int, Cell> teste; 
 	//map<int, Cell>::iterator itr;
