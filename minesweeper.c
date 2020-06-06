@@ -213,18 +213,18 @@ class FieldManager {
 					Cell auxiliaryCell = getCellByCoordinates(i,j);
 					if (auxiliaryCell.alreadyRevealed()){
 						if (auxiliaryCell.getBombsInNeighborhood() > 0){
-							cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+							cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
 						}
 						else {
-							cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+							cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
 						}
 					}
 					else {
 						if (auxiliaryCell.getIsFlag()){
-							cout << YELLOW << "F " << RESET;
+							cout << YELLOW << "F" << RESET << "|";
 						}
 						else {
-							cout << "# ";
+							cout << "#|";
 						}
 					}  
 					
@@ -271,21 +271,21 @@ class FieldManager {
 							Cell auxiliaryCell = getCellByCoordinates(i,j);
 							//If the cell is a bomb, show it!
 							if (auxiliaryCell.getIsBomb()){
-								cout << RED << "B " << RESET;
+								cout << RED << "B" << RESET << "|";
 							}
 							else {
 								//If the cell has been revealed, show its value.
 								if (auxiliaryCell.alreadyRevealed()){
 									if (auxiliaryCell.getBombsInNeighborhood() > 0){
-										cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+										cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
 									}
 									else {
-										cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << " " << RESET;
+										cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
 									}
 								}
 								else{
 									//Else, stay it hidden, as the game does
-									cout << "# ";
+									cout << "#|";
 								}
 							}
 						}
