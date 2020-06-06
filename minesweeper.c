@@ -16,6 +16,7 @@ using namespace std;
 #define BLUE    "\033[34m"
 #define WHITE   "\033[37m"
 #define YELLOW  "\033[33m" 
+#define GREEN   "\033[32m" 
 
 class Queue {
 	public:
@@ -504,7 +505,45 @@ int main()
 
 		if (option == "Start"){
 			//start the game
+			string startOption = "";
+			vector<int> userGuess;
+			int guessResult = 4;
 			cout << ">> The game will start!" << endl;
+			FieldManager userField = FieldManager(lines, columns, numberOfBombs);
+			userField.initializeField();
+			userField.printField();
+			
+
+			do {
+				cout << ">> Type the line and the column of desired cell to click! Format: line-column" << endl;
+				cout << ">> You can type also Exit to quit to the main menu" << endl << ">> ";
+				cin >> startOption;
+
+				if (startOption != "Exit"){
+					userGuess = userField.split(startOption);
+					guessResult = userField.chooseCell(userGuess[0], userGuess[1]);
+
+					if (guessResult == 0){
+						cout << YELLOW << "-------------------------------" << RESET << endl; 
+						cout << YELLOW << "----------" << RED << "GAME OVER" << YELLOW << "------------" << endl;
+						cout << YELLOW << "-------------------------------" << RESET << endl;
+						break;
+					}
+
+					else if (guessResult == 2){
+						cout << BLUE << "-------------------------------" << RESET << endl; 
+						cout << BLUE << "-----------" << GREEN << "YOU WIN!" << BLUE << "------------" << endl;
+						cout << BLUE << "--------" << GREEN << "CONGRATULATIONS :)" << BLUE << "-----" << endl;
+						cout << BLUE << "-------------------------------" << RESET << endl;
+						break;
+					}
+
+				}
+
+			} while (startOption != "Exit");
+			
+			cout << ">> Returning to the main menu" << endl;
+
 		}
 		else if (option == "Options"){
 			do {
