@@ -6,13 +6,6 @@
 
 using namespace std;
 
-#define RESET   "\033[0m"
-#define RED     "\033[31m" 
-#define BLUE    "\033[34m"
-#define WHITE   "\033[37m"
-#define YELLOW  "\033[33m" 
-#define GREEN   "\033[32m" 
-
 void Queue :: enqueue(string cellCoordinates){
 	buffer.push_back(cellCoordinates);
 }
@@ -227,16 +220,16 @@ void FieldManager :: printField(){
             if (auxiliaryCell.alreadyRevealed()){
                 //If the cell has been revealed, shown its value
                 if (auxiliaryCell.getBombsInNeighborhood() > 0){
-                    cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
+                    cout << auxiliaryCell.getBombsInNeighborhood() << "|";
                 }
                 else {
-                    cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
+                    cout << auxiliaryCell.getBombsInNeighborhood() << "|";
                 }
             }
             else {
                 //Else show a # or a flag (if the cell is a flag)
                 if (auxiliaryCell.getIsFlag()){
-                    cout << YELLOW << "F" << RESET << "|";
+                    cout << "F|";
                 }
                 else {
                     cout << "#|";
@@ -292,16 +285,16 @@ int FieldManager :: chooseCell(int l, int c){
                     Cell auxiliaryCell = getCellByCoordinates(i,j);
                     //If the cell is a bomb, show it!
                     if (auxiliaryCell.getIsBomb()){
-                        cout << RED << "B" << RESET << "|";
+                        cout << "B|";
                     }
                     else {
                         //If the cell has been revealed, show its value.
                         if (auxiliaryCell.alreadyRevealed()){
                             if (auxiliaryCell.getBombsInNeighborhood() > 0){
-                                cout << BLUE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
+                                cout << auxiliaryCell.getBombsInNeighborhood() << "|";
                             }
                             else {
-                                cout << WHITE << auxiliaryCell.getBombsInNeighborhood() << RESET << "|";
+                                cout << auxiliaryCell.getBombsInNeighborhood() << "|";
                             }
                         }
                         else{
