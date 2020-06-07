@@ -6,6 +6,14 @@
 
 using namespace std;
 
+#define RESET   "\033[0m"
+#define RED     "\033[31m" 
+#define BLUE    "\033[34m"
+#define WHITE   "\033[37m"
+#define YELLOW  "\033[33m" 
+#define GREEN   "\033[32m" 
+
+
 int main() 
 {
 	//Here we create the menu for the user
@@ -17,9 +25,9 @@ int main()
 	Utils utils = Utils();
 
 	while (option != "Exit"){
-		cout << "-------------------------------" << endl; 
-		cout << "----------MINESWEEPER----------" << endl;
-		cout << "-------------------------------" << endl;
+		cout << RED << "-------------------------------" << RESET << endl; 
+		cout << RED << "----------" << YELLOW << "MINESWEEPER" << RED << "----------" << endl;
+		cout << RED << "-------------------------------" << RESET << endl;
 		cout << ">> Type" << endl << ">> Start - begin the game" << endl;
 		cout << ">> Options - choose the game settings" << endl;
 		cout << ">> Exit - closes the application" << endl;
@@ -65,17 +73,17 @@ int main()
 						guessResult = userField.chooseCell(userGuess_line, userGuess_column);
 
 						if (guessResult == 0){
-							cout << "-------------------------------" << endl; 
-							cout << "----------GAME OVER------------" << endl;
-							cout << "-------------------------------" << endl;
+							cout << YELLOW << "-------------------------------" << RESET << endl; 
+							cout << YELLOW << "----------" << RED << "GAME OVER" << YELLOW << "------------" << endl;
+							cout << YELLOW << "-------------------------------" << RESET << endl;
 							startOption = "E";
 						}
 
 						else if (guessResult == 2){
-							cout << "-------------------------------" << endl; 
-							cout << "-----------YOU WIN!------------" << endl;
-							cout << "--------CONGRATULATIONS :)-----" << endl;
-							cout << "-------------------------------" << endl;
+							cout << BLUE << "-------------------------------" << RESET << endl; 
+							cout << BLUE << "-----------" << GREEN << "YOU WIN!" << BLUE << "------------" << endl;
+							cout << BLUE << "--------" << GREEN << "CONGRATULATIONS :)" << BLUE << "-----" << endl;
+							cout << BLUE << "-------------------------------" << RESET << endl;
 							startOption = "E";
 						}
 					}
