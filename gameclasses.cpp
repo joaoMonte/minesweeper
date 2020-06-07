@@ -3,6 +3,7 @@
 #include <sstream>
 #include "stdlib.h"
 #include "gameclasses.h"
+#include <time.h>
 
 using namespace std;
 
