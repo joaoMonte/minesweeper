@@ -144,6 +144,7 @@ class FieldManager {
 			int randomNumber;
 			map<int, string>::iterator iter;
 			int i = 1;
+			srand(time(0)); 
 			while(i <= numberOfBombs){
 				randomNumber = rand() % (lines*columns) + 1;
 				iter = bombsPositions.find(randomNumber);
