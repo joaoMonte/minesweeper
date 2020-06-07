@@ -144,6 +144,7 @@ class FieldManager {
 		// - revealedCells: counts how many cells have been revealed. 
 		//	 It will helps to know when the user won the game
 		FieldManager(int l, int c, int n){
+			utils = Utils();
 			lines = l;
 			columns = c;
 			numberOfBombs = n;
@@ -164,7 +165,7 @@ class FieldManager {
 			int positionCounter = 1;
 			for (int i = 1; i <= lines; i++){
 				for (int j = 1; j <= columns; j++){
-					key = toStr(i) + "-" + toStr(j);
+					key = utils.toStr(i) + "-" + utils.toStr(j);
 					iter = bombsPositions.find(positionCounter);
 					//If the current position is a bomb position, we will create the cell as bomb
 					if (iter != bombsPositions.end()){
@@ -302,7 +303,7 @@ class FieldManager {
 
 		//Return a cell object by its coordinates (like 1-2). It supports many other methods
 		Cell getCellByCoordinates(int line, int column){
-				string key = toStr(line) + "-" + toStr(column);
+				string key = utils.toStr(line) + "-" + utils.toStr(column);
 				map<string, Cell>::iterator itr;
 				itr = field.find(key);
 				return itr->second;
@@ -311,7 +312,7 @@ class FieldManager {
 		//Save a cell object on given coordinates (like 1-2). It supports many other methods
 		void updateCell(Cell updatedCell, int l, int c){
 			map<string, Cell>::iterator itr;
-			string key = toStr(l) + "-" + toStr(c);
+			string key = utils.toStr(l) + "-" + utils.toStr(c);
 			itr = field.find(key);
 			itr->second = updatedCell;
 		}
@@ -400,7 +401,7 @@ class FieldManager {
 			//This method traverse the field map to select the cells which will be showed
 			//Its use an Breadth-First Search - BFS to traverse the field. the queue is the used datastructure
 			Queue queue = Queue();
-			string key = toStr(starter_l) + "-" + toStr(starter_c);
+			string key = utils.toStr(starter_l) + "-" + utils.toStr(starter_c);
 			vector<int> coordinates;
 			queue.enqueue(key);
 			int l;
@@ -408,7 +409,7 @@ class FieldManager {
 
 			while (!queue.isEmpty()) {
 				key = queue.dequeue();
-				coordinates = split(key);
+				coordinates = utils.split(key);
 				l = coordinates[0];
 				c = coordinates[1];
 
@@ -427,7 +428,7 @@ class FieldManager {
 				if (l-1 >= 1 && c-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l-1, c-1);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l-1) + "-" + toStr(c-1));
+						queue.enqueue(utils.toStr(l-1) + "-" + utils.toStr(c-1));
 					}
 					else{
 						if (!getCellByCoordinates(l-1, c-1).alreadyRevealed()){
@@ -441,7 +442,7 @@ class FieldManager {
 				if (l-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l-1, c);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l-1) + "-" + toStr(c));
+						queue.enqueue(utils.toStr(l-1) + "-" + utils.toStr(c));
 					}
 					else{
 						if (!getCellByCoordinates(l-1, c).alreadyRevealed()){
@@ -454,7 +455,7 @@ class FieldManager {
 				if (l-1 >= 1 && c+1 <= columns) {
 					Cell auxiliaryCell = getCellByCoordinates(l-1, c+1);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l-1) + "-" + toStr(c+1));
+						queue.enqueue(utils.toStr(l-1) + "-" + utils.toStr(c+1));
 					}
 					else{
 						if (!getCellByCoordinates(l-1, c+1).alreadyRevealed()){
@@ -467,7 +468,7 @@ class FieldManager {
 				if (c-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l, c-1);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l) + "-" + toStr(c-1));
+						queue.enqueue(utils.toStr(l) + "-" + utils.toStr(c-1));
 					}
 					else{
 						if (!getCellByCoordinates(l, c-1).alreadyRevealed()){
@@ -480,7 +481,7 @@ class FieldManager {
 				if (c+1 <= columns) {
 					Cell auxiliaryCell = getCellByCoordinates(l, c+1);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l) + "-" + toStr(c+1));
+						queue.enqueue(utils.toStr(l) + "-" + utils.toStr(c+1));
 					}
 					else{
 						if (!getCellByCoordinates(l, c+1).alreadyRevealed()){
@@ -493,7 +494,7 @@ class FieldManager {
 				if (l+1 <= lines && c-1 >= 1) {
 					Cell auxiliaryCell = getCellByCoordinates(l+1, c-1);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l+1) + "-" + toStr(c-1));
+						queue.enqueue(utils.toStr(l+1) + "-" + utils.toStr(c-1));
 					}
 					else{
 						if (!getCellByCoordinates(l+1, c-1).alreadyRevealed()){
@@ -506,7 +507,7 @@ class FieldManager {
 				if (l+1 <= lines) {
 					Cell auxiliaryCell = getCellByCoordinates(l+1, c);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l+1) + "-" + toStr(c));
+						queue.enqueue(utils.toStr(l+1) + "-" + utils.toStr(c));
 					}
 					else{
 						if (!getCellByCoordinates(l+1, c).alreadyRevealed()){
@@ -519,7 +520,7 @@ class FieldManager {
 				if (l+1 <= lines && c+1 <= columns) {
 					Cell auxiliaryCell = getCellByCoordinates(l+1, c+1);
 					if (auxiliaryCell.getBombsInNeighborhood() == 0 && !auxiliaryCell.alreadyRevealed()){
-						queue.enqueue(toStr(l+1) + "-" + toStr(c+1));
+						queue.enqueue(utils.toStr(l+1) + "-" + utils.toStr(c+1));
 					}
 					else{
 						if (!getCellByCoordinates(l+1, c+1).alreadyRevealed()){
@@ -547,6 +548,7 @@ class FieldManager {
 		int columns;
 		int numberOfBombs;
 		int revealedCells;
+		Utils utils;
 		map<string, Cell> field;
 		map<int, string> bombsPositions;
 
@@ -561,6 +563,7 @@ int main()
 	int columns = 10;
 	string option = "";
 	bool validSetup = false;
+	Utils utils = Utils();
 
 	while (option != "Exit"){
 		cout << RED << "-------------------------------" << RESET << endl; 
@@ -596,9 +599,11 @@ int main()
 
 				//if the user choose Guess, he need to type a coordinate (format: line-column)
 				if (startOption == "G"){
-					cout << ">> Type your guess using the format line-column" << endl << ">> ";
+					cout << ">> Type your guess using the format line-column" << endl;
+					cout << ">> The field is indexed starting from the line and column 1!" << endl << ">> ";
+					
 					cin >> cellChoice;
-					userGuess = userField.split(cellChoice);
+					userGuess = utils.split(cellChoice);
 					int userGuess_line = userGuess[0];
 					int userGuess_column = userGuess[1];
 
@@ -626,9 +631,10 @@ int main()
 				}
 				else if (startOption == "F"){
 					//if the user choose Flag, he need to type a coordinate for the flag (format: line-column)
-					cout << ">> Type your flag location using the format line-column" << endl << ">> ";
+					cout << ">> Type your flag location using the format line-column" << endl;
+					cout << ">> The field is indexed starting from the line and column 1!" << endl << ">> ";
 					cin >> flagPosition;
-					flagChoice = userField.split(flagPosition); 
+					flagChoice = utils.split(flagPosition); 
 					int flag_line = flagChoice[0];
 					int flag_column = flagChoice[1];
 					userField.setFlag(flag_line, flag_column);
