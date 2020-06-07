@@ -24,6 +24,12 @@ To compile and run the game on Windows, type:
 ```
  After that, just double click the generated executable.
 
+
+I developed a colored version of the game, but at this current moment it only works on linux.
+If you are running the project in the linux, before create the executable, change the branch from
+"master" to "colored_version". The colors help to view the bombs, grid and numbers. I pretend to implement it for Windows soon.
+
+
 ## Playing
 
 
