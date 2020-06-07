@@ -90,6 +90,50 @@ class Cell {
 
 };
 
+class Utils {
+	public:
+		//Simple cast operation
+		int toInt(string str){
+			stringstream auxiliary(str); 
+			int output; 
+    		auxiliary >> output;
+			return output; 
+		}
+
+		//Simple cast operation
+		string toStr(int number){
+			string auxiliaryString;
+			stringstream strstream;
+			strstream << number;
+			return strstream.str();
+		}
+
+		//Auxilary method which breaks an coordinate string into two ints!
+		vector<int> split(string str){
+			vector<int> output;
+			string buffer = "";
+			int i = 0;
+			int number;
+			while (i < str.length()){
+				if (str[i] != '-'){
+					buffer += str[i];
+				}
+				else{
+					number = toInt(buffer);
+					output.push_back(number);
+					buffer = "";
+				}
+				i++;
+			}
+			//add the last buffer to the output. 
+			//Because the loop exits before did it
+			number = toInt(buffer);
+			output.push_back(number);
+			return output;
+		}
+	
+};
+
 
 class FieldManager {
 	//This class manages the field;
@@ -107,14 +151,6 @@ class FieldManager {
 			// Generate, randomly, bomb positions and stores it at bombPositions map
 			generateBombPositions();
 
-		}
-
-		//Simple cast operation
-		string toStr(int number){
-			string auxiliaryString;
-			stringstream strstream;
-			strstream << number;
-			return strstream.str();
 		}
 
 		void initializeField(){
@@ -360,39 +396,6 @@ class FieldManager {
 			return output;
 		}
 
-		//Simple cast operation
-		int toInt(string str){
-			stringstream auxiliary(str); 
-			int output; 
-    		auxiliary >> output;
-			return output; 
-		}
-
-		//Auxilary method which breaks an coordinate string into two ints!
-		vector<int> split(string str){
-			vector<int> output;
-			string buffer = "";
-			int i = 0;
-			int number;
-			while (i < str.length()){
-				if (str[i] != '-'){
-					buffer += str[i];
-				}
-				else{
-					number = toInt(buffer);
-					output.push_back(number);
-					buffer = "";
-				}
-				i++;
-			}
-			//add the last buffer to the output. 
-			//Because the loop exits before did it
-			number = toInt(buffer);
-			output.push_back(number);
-			return output;
-		}
-
-
 		void revealGroupOfCells(int starter_l, int starter_c){
 			//This method traverse the field map to select the cells which will be showed
 			//Its use an Breadth-First Search - BFS to traverse the field. the queue is the used datastructure
@@ -530,10 +533,6 @@ class FieldManager {
 		//Check if the user won the game 
 		bool didUserWin(){
 			return revealedCells + numberOfBombs == lines * columns;
-		}
-
-		int getRevealed(){
-			return revealedCells;
 		}
 
 		//Set a flag in a cell
