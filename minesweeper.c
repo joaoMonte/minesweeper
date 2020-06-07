@@ -6,9 +6,6 @@
 #include <sstream>
 #include "stdlib.h"
 
-
-
-
 using namespace std; 
 
 #define RESET   "\033[0m"
@@ -19,6 +16,8 @@ using namespace std;
 #define GREEN   "\033[32m" 
 
 class Queue {
+	//This class is a basic queue abstraction
+	//It will helps when doing a BFS searching for cells which will be revealed
 	public:
 		void enqueue(string cellCoordinates){
 			buffer.push_back(cellCoordinates);
@@ -39,6 +38,13 @@ class Queue {
 };
 
 class Cell {
+	//This class represents a cell in the minesweeper field
+	//Its instances will be stored at the field map. 
+	//Its variables are 
+	// - revealed: If the cell is already revealed by the user
+	// - isBomb: Says if the cell is a bomb
+	// - isFlag: Says if the cell has a flag
+	// - bombsInNeighborhood: folowing the game rules, each cell must say how many bombs are in the next 8 spaces 
 	public:
 		Cell(bool isbomb){
 			isBomb = isbomb;
